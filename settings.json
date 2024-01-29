@@ -1,0 +1,128 @@
+{
+    "[c]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.maxTokenizationLineLength": 2500
+    },
+    "[prisma]": {
+        "editor.formatOnSave": true
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[cpp]": {
+        "editor.defaultFormatter": "ms-vscode.cpptools"
+    },
+    "apc.font.family": "Lexend Deca",
+    "apc.header": {
+        "height": 29
+    },
+    "apc.listRow": {
+        "height": 25
+    },
+    "apc.stylesheet": {
+
+    },
+    "window.titleBarStyle": "custom",   
+    "background.fullscreen": {
+        "images": ["file:///C:/Users/dadma/Downloads/wallpaper/PViAOAnp.png"],
+        "background-position": "100% 100%",
+        "background-size": "cover",
+        "opacity": 0.85,
+        "position": "center"
+    } ,
+    "console-ninja.featureSet": "Community",
+    "editor.accessibilitySupport": "off",
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "editor.cursorBlinking": "phase",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.fontFamily": "JetBrains Mono", 
+    "editor.fontLigatures": true, 
+    "editor.fontSize": 21,
+    "editor.lineHeight": 1.6,
+    "editor.semanticHighlighting.enabled": false,
+    "editor.guides.bracketPairs": true,
+    "editor.scrollbar.horizontal": "hidden",
+    "editor.scrollbar.vertical": "hidden",
+    "editor.hideCursorInOverviewRuler": true,
+    "editor.inlineSuggest.enabled": true,
+    "editor.minimap.renderCharacters": false,
+    "editor.minimap.showSlider": "always",
+    "editor.minimap.size": "fit",
+    "explorer.compactFolders": false,
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "Cargo.toml": "Cargo.lock",
+        "package.json": "package-lock.json, pnpm-lock.yaml, tsconfig*, vite.config*, .eslintrc*, .prettierrc*, .babelrc*",
+        "tailwind.config*": "tailwind.config*, postcss.config*, components.json",
+        
+    },
+    "files.exclude": {
+        "node_modules": true,
+    },
+    "files.autoSave": "afterDelay",
+    "git.autofetch": true,
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+    "git.openRepositoryInParentFolders": "never",
+    "github.copilot.advanced": {},
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false,
+        "c": true,
+        "java": true,
+        "yaml": true
+    },
+    "liveServer.settings.donotShowInfoMsg": true,
+    "material-icon-theme.activeIconPack": "nest",
+    "security.workspace.trust.untrustedFiles": "open",
+    "settingsSync.ignoredExtensions": [
+        "s-nlf-fh.glassit",
+        "prisma.prisma",
+        "ms-vscode.cpptools-extension-pack",
+        "codium.codium",
+        "ms-toolsai.jupyter",
+        "ms-vscode.makefile-tools",
+        "shalldie.background"
+    ],
+    "symbols.hidesExplorerArrows": true,
+    "telemetry.telemetryLevel": "crash",
+    "terminal.integrated.env.windows": {},
+    "terminal.integrated.fontFamily": "'Fira Code'",
+    "workbench.colorTheme": "Everforest Dark",
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.showTabs": "none",
+    "workbench.sideBar.location": "right",
+    "workbench.startupEditor": "none",
+    "projectManager.git.baseFolders": ["C:\\code"],
+    "projectManager.sortList": "Recent",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.cursorStyleInactive": "underline",
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.copyOnSelection": true,
+    "terminal.integrated.fontSize": 16,
+    "terminal.integrated.smoothScrolling": true,
+    "editor.padding.top": 10,
+    "workbench.statusBar.visible": false,
+    "workbench.activityBar.location": "hidden",
+    "editor.minimap.enabled": false,
+    "breadcrumbs.enabled": false,
+    "window.commandCenter": false,
+    "editor.linkedEditing": true,
+    "workbench.iconTheme": "symbols",
+    "window.menuBarVisibility": "compact",
+    "workbench.layoutControl.enabled": false,
+    "workbench.editor.editorActionsLocation": "hidden",
+}
