@@ -1,0 +1,14 @@
+# Appearance {{{
+font=Fira Code Nerd Font Mono
+width=350
+padding=10
+margin=10
+border-size=2
+border-radius=8
+
+background-color=#1d202f
+border-color=#f7768e
+text-color=#c0caf5
+# }}}
+
+default-timeout=2000
