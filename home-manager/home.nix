@@ -8,6 +8,8 @@ with pkgs;
   home.packages = with pkgs; [
     htop
     neofetch
+    grim
+    slurp
   ];
  
   home.stateVersion = "22.11";
