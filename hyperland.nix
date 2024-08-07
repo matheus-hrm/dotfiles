@@ -35,6 +35,10 @@
        dolphin
        wezterm
        rofi-wayland
+       hyprpaper
+       hyprlock
+       hypridle
+       hyprpicker
      ];
    };
    environment.loginShellInit = ''

@@ -21,7 +21,8 @@
 	  modules = [
 	    ./configuration.nix
 	    #./plasma6.nix
-	    ./hyperland.nix
+	    #./hyperland.nix
+	    ./i3wm.nix
 	    home-manager.nixosModules.home-manager
 	    {
 	      home-manager = {

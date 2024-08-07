@@ -4,8 +4,9 @@
   imports =
     [ 
       ./hardware-configuration.nix
-      ./hyperland.nix
+      # ./hyperland.nix
       # ./plasma6.nix
+      ./i3wm.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -88,12 +89,20 @@
     spicetify-cli
     vscode-fhs
     rustc
+    cargo
+    rustup
     bend
     gcc
     python3
     go
+    nodejs_22
+    bun
+    elixir_1_15
     zed-editor
     kitty
+    unzip
+    nwg-look
+    dbeaver-bin
   ];
   
   environment.shells = with pkgs; [ zsh ]; 
