@@ -6,7 +6,8 @@
       ./hardware-configuration.nix
       # ./hyperland.nix
       # ./plasma6.nix
-      ./i3wm.nix
+      # ./i3wm.nix
+      ./sway.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -37,7 +38,7 @@
 
   services.xserver = {
     enable = true;
-    xkb.layout = "us";
+    xkb.layout = "br";
   };
   services.printing.enable = true;
 
@@ -58,7 +59,7 @@
   users.users.matheus = {
     isNormalUser = true;
     description = "matheus";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "video" "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
     #  thunderbird
@@ -93,16 +94,37 @@
     rustup
     bend
     gcc
+    clang
+    llvm
+    clang
+    libclang
+    fzf
+    ripgrep
+    transmission
     python3
     go
     nodejs_22
+    gradle
+    jdk
+    ungoogled-chromium
     bun
     elixir_1_15
     zed-editor
     kitty
     unzip
+    gnome.nautilus
     nwg-look
     dbeaver-bin
+    mpv
+    bat
+    postman
+    insomnia
+    postgresql
+    rofi
+    dunst
+    libreoffice
+    playerctl
+    ani-cli
   ];
   
   environment.shells = with pkgs; [ zsh ]; 

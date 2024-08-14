@@ -33,9 +33,11 @@ with lib;
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --flake ~/nixos#nixos";
       hm-switch = "home-manager switch --flake ~/nixos#matheus";
+      cat = "bat";
     };
     initExtra = ''
      bindkey '^f' autosuggest-accept
+     [ "$(tty)" = "/dev/tty1" ] && exec sway
     ''; 
   };
 }

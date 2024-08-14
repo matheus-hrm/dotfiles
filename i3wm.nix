@@ -5,6 +5,7 @@
     picom = {
       enable = true;
     };
+    displayManager.defaultSession = "xfce+i3";
     xserver = {
       enable = true;
       desktopManager = {
@@ -15,7 +16,6 @@
           enableXfwm = false;
         };
       };
-      displayManager.defaultSession = "xfce+i3";
       windowManager.i3 = {
         enable = true;
         extraPackages = with pkgs; [
@@ -27,7 +27,7 @@
           polybar
           lxappearance
           nitrogen
-          clipmenu
+          clipit
         ];
       };
     };
