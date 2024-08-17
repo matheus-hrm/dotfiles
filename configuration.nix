@@ -75,7 +75,10 @@
   fonts.packages = with pkgs; [
      fira-code
      iosevka
-     (nerdfonts.override { fonts = [ "FiraCode" "Iosevka" ]; })
+     monocraft
+     jetbrains-mono
+     iosevka-comfy.comfy
+     (nerdfonts.override { fonts = [ "FiraCode" "Iosevka" "DroidSansMono" "JetBrainsMono" ]; })
   ];
 
   environment.systemPackages = with pkgs; [
@@ -125,6 +128,8 @@
     libreoffice
     playerctl
     ani-cli
+    git-credential-manager
+    github-desktop
   ];
   
   environment.shells = with pkgs; [ zsh ]; 
