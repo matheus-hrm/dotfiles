@@ -39,6 +39,7 @@
   services.xserver = {
     enable = true;
     xkb.layout = "br";
+    videoDrivers = [ "amdgpu" ];
   };
   services.printing.enable = true;
 
@@ -69,6 +70,7 @@
   
   programs.zsh.enable = true;
   programs.firefox.enable = true;
+  programs.steam.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
@@ -130,6 +132,9 @@
     ani-cli
     git-credential-manager
     github-desktop
+    stremio
+    btop
+    obs-studio
   ];
   
   environment.shells = with pkgs; [ zsh ]; 
