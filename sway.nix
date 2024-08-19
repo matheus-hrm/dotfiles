@@ -12,7 +12,8 @@
     wob
     i3status 
     waybar
-  ];
+    networkmanagerapplet
+    ];
   services.xserver.displayManager.lightdm.enable = false;
   services.getty.autologinUser = "matheus";
   xdg.portal = {
