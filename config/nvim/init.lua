@@ -17,3 +17,14 @@ end
 
 require "lazy_setup"
 require "polish"
+
+local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/nvim-transparent'
+
+-- Verificar se o plugin já está instalado
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  -- Clonar o plugin se não estiver instalado
+  vim.fn.system({'git', 'clone', 'https://github.com/xiyaowong/nvim-transparent', install_path})
+  -- Executar PackerCompile se acabamos de instalar
+  vim.cmd [[packadd nvim-transparent]]
+end
+

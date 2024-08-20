@@ -12,7 +12,7 @@ else
     music_player="ncspot"
 fi
 
-icon=""
+icon=" "
 
 action=$1
 

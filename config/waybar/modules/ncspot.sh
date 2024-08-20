@@ -1,7 +1,7 @@
 #!/bin/sh
 
 class=$(playerctl metadata --player=ncspot --format '{{lc(status)}}')
-icon=""
+icon=" "
 
 if [[ $class == "playing" ]]; then
   info=$(playerctl metadata --player=ncspot --format '{{artist}} - {{title}}')

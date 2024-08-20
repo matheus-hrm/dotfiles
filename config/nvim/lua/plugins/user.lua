@@ -1,4 +1,3 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
 -- You can also add or configure plugins by creating files in this `plugins/` folder
 -- Here are some examples:
@@ -8,13 +7,55 @@ return {
 
   -- == Examples of Adding Plugins ==
 
-  "andweeb/presence.nvim",
+  {
+    "andweeb/presence.nvim",
+    config = function()
+      require("presence"):setup({
+        auto_update = true, -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
+        neovim_image_text = "The One True Text Editor",
+        main_image = "file",
+        log_level = nil,
+        debounce_timeout = 10,
+      })
+    end,
+  },
+  {
+    "xiyaowong/transparent.nvim", lazy = false
+  },
+  {
+    "gambhirsharma/vesper.nvim", 
+    lazy = false,
+    priority = 1000,
+    config = function() require("vesper").setup()
+    
+    end,
+  },
+  {
+    'morhetz/gruvbox', lazy = false
+  },
+  {
+   'wakatime/vim-wakatime', lazy = false 
+  },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    opts = {},
+  },
+  {
+    "catppuccin/nvim", lazy = false
+  },
   {
     "ray-x/lsp_signature.nvim",
     event = "BufRead",
     config = function() require("lsp_signature").setup() end,
   },
-
+  {
+    "github/copilot.vim",
+    config = function()
+    vim.g.copilot_no_tab_map = true  -- Disable default <Tab> mapping
+      vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+    end,
+  },
   -- == Examples of Overriding Plugins ==
 
   -- customize alpha options
@@ -23,17 +64,6 @@ return {
     opts = function(_, opts)
       -- customize the dashboard header
       opts.section.header.val = {
-        " █████  ███████ ████████ ██████   ██████",
-        "██   ██ ██         ██    ██   ██ ██    ██",
-        "███████ ███████    ██    ██████  ██    ██",
-        "██   ██      ██    ██    ██   ██ ██    ██",
-        "██   ██ ███████    ██    ██   ██  ██████",
-        " ",
-        "    ███    ██ ██    ██ ██ ███    ███",
-        "    ████   ██ ██    ██ ██ ████  ████",
-        "    ██ ██  ██ ██    ██ ██ ██ ████ ██",
-        "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
-        "    ██   ████   ████   ██ ██      ██",
       }
       return opts
     end,
