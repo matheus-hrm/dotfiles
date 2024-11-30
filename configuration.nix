@@ -43,6 +43,7 @@
   };
   services.printing.enable = true;
 
+  hardware.bluetooth.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -113,6 +114,7 @@
     jdk
     ungoogled-chromium
     bun
+    pnpm
     elixir_1_15
     zed-editor
     kitty
