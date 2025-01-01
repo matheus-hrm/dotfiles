@@ -1,11 +1,16 @@
 { config, pkgs, ... }:
 
 let
-  unstable = import
-    (fetchTarball {
+  unstableTarball =
+    fetchTarball {
       url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-    })
-    { };
+      sha256 = "1fs25csg0lq3v34jdzxr2qdvnyvylimmfh0qxlf39h4j1hclvbyj";
+    };
+
+  unstable = import unstableTarball {
+    config = config.nixpkgs.config;
+    system = "x86_64-linux";
+  };
 in
 {
   imports =
@@ -80,7 +85,9 @@ in
   programs.firefox.enable = true;
   programs.steam.enable = true;
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
 
   fonts.packages = with pkgs; [
     fira-code
@@ -101,7 +108,7 @@ in
     vesktop
     spotify
     spicetify-cli
-    vscode-fhs
+    unstable.vscode-fhs
     rustc
     cargo
     rustup

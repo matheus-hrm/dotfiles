@@ -1,37 +1,25 @@
-
--- You can also add or configure plugins by creating files in this `plugins/` folder
--- Here are some examples:
-
 ---@type LazySpec
 return {
-
-  -- == Examples of Adding Plugins ==
-
-  {
-    "andweeb/presence.nvim",
-    config = function()
-      require("presence"):setup({
-        auto_update = true, -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
-        neovim_image_text = "The One True Text Editor",
-        main_image = "file",
-        log_level = nil,
-        debounce_timeout = 10,
-      })
-    end,
-  },
+  -- {
+  --   "andweeb/presence.nvim",
+  --   config = function()
+  --     require("presence"):setup({
+  --       auto_update = true, -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
+  --       neovim_image_text = "Neovim text editor",
+  --       main_image = "file",
+  --       log_level = nil,
+  --       debounce_timeout = 10,
+  --     })
+  --   end,
+  -- },
   {
     "xiyaowong/transparent.nvim", lazy = false
   },
   {
-    "gambhirsharma/vesper.nvim", 
-    lazy = false,
-    priority = 1000,
-    config = function() require("vesper").setup()
-    
-    end,
+    'morhetz/gruvbox', lazy = false
   },
   {
-    'morhetz/gruvbox', lazy = false
+    'mellow-theme/mellow.nvim', lazy = false
   },
   {
    'wakatime/vim-wakatime', lazy = false 
@@ -42,7 +30,18 @@ return {
     opts = {},
   },
   {
-    "catppuccin/nvim", lazy = false
+    "catppuccin/nvim",
+    lazy = false,
+    name = "catppuccin",
+    priority = 1000,
+    config = function() require("catppuccin").setup({
+      flavour = "macchiato",
+      transparent_background = false,
+      styles = {
+        comments = { "italic" },
+        strings = { "italic " },
+      },
+    }) end,
   },
   {
     "ray-x/lsp_signature.nvim",
@@ -55,6 +54,9 @@ return {
     vim.g.copilot_no_tab_map = true  -- Disable default <Tab> mapping
       vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
     end,
+  },
+  {
+    "mfussenegger/nvim-jdtls",
   },
   -- == Examples of Overriding Plugins ==
 
