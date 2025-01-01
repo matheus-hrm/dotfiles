@@ -114,9 +114,9 @@
     jdk
     ungoogled-chromium
     bun
-    pnpm
     elixir_1_15
     zed-editor
+    proxychains
     kitty
     unzip
     gnome.nautilus
