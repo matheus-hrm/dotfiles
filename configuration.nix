@@ -1,8 +1,15 @@
 { config, pkgs, ... }:
 
+let
+  unstable = import
+    (fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
+    })
+    { };
+in
 {
   imports =
-    [ 
+    [
       ./hardware-configuration.nix
       # ./hyperland.nix
       # ./plasma6.nix
@@ -64,11 +71,11 @@
     extraGroups = [ "video" "networkmanager" "wheel" "docker" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
-    #  thunderbird
+      #  thunderbird
     ];
   };
-  
-  
+
+
   programs.zsh.enable = true;
   programs.firefox.enable = true;
   programs.steam.enable = true;
@@ -76,12 +83,12 @@
   nixpkgs.config.allowUnfree = true;
 
   fonts.packages = with pkgs; [
-     fira-code
-     iosevka
-     monocraft
-     jetbrains-mono
-     iosevka-comfy.comfy
-     (nerdfonts.override { fonts = [ "FiraCode" "Iosevka" "DroidSansMono" "JetBrainsMono" ]; })
+    fira-code
+    iosevka
+    monocraft
+    jetbrains-mono
+    iosevka-comfy.comfy
+    (nerdfonts.override { fonts = [ "FiraCode" "Iosevka" "DroidSansMono" "JetBrainsMono" ]; })
   ];
 
   environment.systemPackages = with pkgs; [
@@ -117,7 +124,7 @@
     elixir_1_15
     zed-editor
     proxychains
-    kitty
+    unstable.kitty
     unzip
     gnome.nautilus
     nwg-look
@@ -138,8 +145,8 @@
     btop
     obs-studio
   ];
-  
-  environment.shells = with pkgs; [ zsh ]; 
+
+  environment.shells = with pkgs; [ zsh ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -157,15 +164,15 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-   environment.loginShellInit = ''
+  environment.loginShellInit = ''
     if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
        nix build --no-link ~/nixos#homeConfigurations.matheus.activationPackage &
        "$(nix path-info ~/nixos#homeConfigurations.matheus.activationPackage)"/activate  
     fi
-   '';
+  '';
 
   virtualisation.docker.enable = true;
-  system.stateVersion = "24.05"; 
+  system.stateVersion = "24.05";
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }
