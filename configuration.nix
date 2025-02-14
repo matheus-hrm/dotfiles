@@ -114,6 +114,9 @@ in
     rustup
     bend
     gcc
+    cmake
+    raylib
+    glfw
     clang
     llvm
     clang
