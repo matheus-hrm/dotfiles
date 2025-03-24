@@ -4,7 +4,7 @@ let
   unstableTarball =
     fetchTarball {
       url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-      sha256 = "1fs25csg0lq3v34jdzxr2qdvnyvylimmfh0qxlf39h4j1hclvbyj";
+      sha256 = "053xxy1bn35d9088h3rznhqkqq7lnnhn4ahrilwik8l4b6k8inlq";
     };
 
   unstable = import unstableTarball {
@@ -19,7 +19,7 @@ in
       # ./hyperland.nix
       # ./plasma6.nix
       # ./i3wm.nix
-      ./sway.nix
+      # ./sway.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -52,6 +52,13 @@ in
     enable = true;
     xkb.layout = "br";
     videoDrivers = [ "amdgpu" ];
+    desktopManager.gnome.enable = true;
+    displayManager.gdm.enable = true;
+  };
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
   };
   services.printing.enable = true;
 
@@ -83,7 +90,6 @@ in
 
   programs.zsh.enable = true;
   programs.firefox.enable = true;
-  programs.steam.enable = true;
 
   nixpkgs.config = {
     allowUnfree = true;
@@ -106,13 +112,14 @@ in
     neovim
     discord
     vesktop
+    unstable.ghostty
+    tmux
     spotify
     spicetify-cli
     unstable.vscode-fhs
     rustc
     cargo
     rustup
-    bend
     gcc
     cmake
     raylib
@@ -123,20 +130,20 @@ in
     libclang
     fzf
     ripgrep
-    transmission
+    qbittorrent
     python3
     go
     nodejs_22
-    gradle
     jdk
     ungoogled-chromium
     bun
     elixir_1_15
-    zed-editor
-    proxychains
+    unstable.zed-editor
     unstable.kitty
     unzip
     gnome.nautilus
+    gnomeExtensions.blur-my-shell
+    brave
     nwg-look
     dbeaver-bin
     mpv
@@ -144,16 +151,15 @@ in
     postman
     insomnia
     postgresql
-    rofi
-    dunst
-    libreoffice
+    wl-clipboard
     playerctl
-    ani-cli
     git-credential-manager
     github-desktop
     stremio
     btop
     obs-studio
+    tldr
+    openvpn
   ];
 
   environment.shells = with pkgs; [ zsh ];
@@ -166,7 +172,7 @@ in
   #   enableSSHSupport = true;
   # };
 
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

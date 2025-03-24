@@ -1,29 +1,30 @@
-{ config, pkgs, lib, ...}:
+{ config, pkgs, lib, ... }:
 {
   environment.systemPackages = with pkgs; [
     grim
     slurp
     wl-clipboard
-    mako 
+    mako
     yofi
+    dunst
     rofi-wayland
     gtklock
     cinnamon.nemo-with-extensions
     wob
-    i3status 
+    i3status
     waybar
     networkmanagerapplet
-    ];
-  services.xserver.displayManager.lightdm.enable = false;
+  ];
+  # services.xserver.displayManager.lightdm.enable = true;
   services.getty.autologinUser = "matheus";
-  xdg.portal = {
-    enable = true; 
-    wlr.enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  };
+  # xdg.portal = {
+  #   enable = true;
+  #   wlr.enable = true;
+  #   extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  # };
   services.gnome.gnome-keyring.enable = true;
   programs.sway = {
-    enable = true;
+    enable = false;
     wrapperFeatures.gtk = true;
     extraPackages = with pkgs; [
       swaylock
