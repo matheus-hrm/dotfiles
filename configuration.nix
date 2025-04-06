@@ -4,7 +4,7 @@ let
   unstableTarball =
     fetchTarball {
       url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-      sha256 = "053xxy1bn35d9088h3rznhqkqq7lnnhn4ahrilwik8l4b6k8inlq";
+      sha256 = "0lbn29dn647kgf3g3nzch8an3m0gn2ysrmq8l7q6lzc8lgwgif8p";
     };
 
   unstable = import unstableTarball {
@@ -163,6 +163,12 @@ in
   ];
 
   environment.shells = with pkgs; [ zsh ];
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  nixpkgs.config.brave.commandLineArgs = [
+    "--enable-features=UseOzonePlatform"
+    "--ozone-platform=wayland"
+    "--enable-features=touchpadOverscrollHistoryNavigation"
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -187,7 +193,10 @@ in
     fi
   '';
 
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    docker.enable = true;
+    virtualbox.enable = true;
+  };
   system.stateVersion = "24.05";
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
