@@ -48,58 +48,63 @@ in
     LC_TIME = "pt_BR.UTF-8";
   };
 
-  services.xserver = {
-    enable = true;
-    xkb.layout = "br";
-    videoDrivers = [ "amdgpu" ];
-    desktopManager.gnome.enable = true;
-    displayManager.gdm.enable = true;
+  services = {
+    xserver = {
+      enable = true;
+      xkb.layout = "br";
+      videoDrivers = [ "amdgpu" ];
+      desktopManager.gnome.enable = true;
+      displayManager.gdm.enable = true;
+    };
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
+    printing.enable = true;
+    openssh.enable = true;
   };
+
   xdg.portal = {
     enable = true;
     wlr.enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
   };
-  services.printing.enable = true;
 
   hardware.bluetooth.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    #jack.enable = true;
-    #media-session.enable = true;
-  };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
   users.users.matheus = {
     isNormalUser = true;
     description = "matheus";
-    extraGroups = [ "video" "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "video" "networkmanager" "wheel" "docker" "vboxusers" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
       #  thunderbird
     ];
   };
 
-
   programs.zsh.enable = true;
   programs.firefox.enable = true;
 
   nixpkgs.config = {
     allowUnfree = true;
+    brave.commandLineArgs = [
+      "--enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland"
+    ];
   };
 
   fonts.packages = with pkgs; [
     fira-code
     iosevka
     monocraft
+    mononoki
+    roboto-mono
+    hermit
     jetbrains-mono
+    comic-mono
     iosevka-comfy.comfy
     (nerdfonts.override { fonts = [ "FiraCode" "Iosevka" "DroidSansMono" "JetBrainsMono" ]; })
   ];
@@ -163,22 +168,6 @@ in
   ];
 
   environment.shells = with pkgs; [ zsh ];
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  nixpkgs.config.brave.commandLineArgs = [
-    "--enable-features=UseOzonePlatform"
-    "--ozone-platform=wayland"
-    "--enable-features=touchpadOverscrollHistoryNavigation"
-  ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -186,18 +175,14 @@ in
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  environment.loginShellInit = ''
-    if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
-       nix build --no-link ~/nixos#homeConfigurations.matheus.activationPackage &
-       "$(nix path-info ~/nixos#homeConfigurations.matheus.activationPackage)"/activate  
-    fi
-  '';
-
   virtualisation = {
     docker.enable = true;
-    virtualbox.enable = true;
+    virtualbox.host = {
+      enable = true;
+      enableExtensionPack = true;
+    };
   };
-  system.stateVersion = "24.05";
 
+  system.stateVersion = "24.05";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }
