@@ -1,10 +1,9 @@
 { config, pkgs, ... }:
-
 let
   unstableTarball =
     fetchTarball {
       url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-      sha256 = "0lbn29dn647kgf3g3nzch8an3m0gn2ysrmq8l7q6lzc8lgwgif8p";
+      sha256 = "0crx0vfmvxxzj8viqpky4k8k7f744dsqnn1ki5qj270bx2w9ssid";
     };
 
   unstable = import unstableTarball {
@@ -115,7 +114,7 @@ in
     curl
     git
     neovim
-    discord
+    unstable.discord
     vesktop
     unstable.ghostty
     tmux
@@ -133,6 +132,7 @@ in
     llvm
     clang
     libclang
+    libreoffice
     fzf
     ripgrep
     qbittorrent
@@ -148,7 +148,7 @@ in
     unzip
     gnome.nautilus
     gnomeExtensions.blur-my-shell
-    brave
+    unstable.brave
     nwg-look
     dbeaver-bin
     mpv
@@ -159,12 +159,12 @@ in
     wl-clipboard
     playerctl
     git-credential-manager
-    github-desktop
     stremio
     btop
     obs-studio
     tldr
     openvpn
+    unstable.proton-pass
   ];
 
   environment.shells = with pkgs; [ zsh ];
@@ -183,6 +183,7 @@ in
     };
   };
 
+  swapDevices = [{ device = "/swapfile"; size = 8192; }];
   system.stateVersion = "24.05";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

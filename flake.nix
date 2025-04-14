@@ -1,4 +1,5 @@
-{
+
+ {
   description = "My Nix Config";
 
   inputs = {
@@ -29,6 +30,7 @@
               home-manager = {
                 useUserPackages = true;
                 useGlobalPkgs = true;
+		backupFileExtension = "backup";
                 users.matheus = import ./home-manager/home.nix;
               };
             }
@@ -45,4 +47,4 @@
         };
       };
     };
-}
+}     
