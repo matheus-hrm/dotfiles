@@ -1,16 +1,4 @@
-{ config, pkgs, ... }:
-let
-  unstableTarball =
-    fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-      sha256 = "0crx0vfmvxxzj8viqpky4k8k7f744dsqnn1ki5qj270bx2w9ssid";
-    };
-
-  unstable = import unstableTarball {
-    config = config.nixpkgs.config;
-    system = "x86_64-linux";
-  };
-in
+{ config, pkgs, unstable, ... }:
 {
   imports =
     [
@@ -23,15 +11,11 @@ in
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
+  networking.hostName = "nixos";
   networking.networkmanager.enable = true;
+  swapDevices = [{ device = "/swapfile"; size = 8192; }];
+  system.stateVersion = "24.05";
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   time.timeZone = "America/Sao_Paulo";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -71,8 +55,11 @@ in
     extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
   };
 
-  hardware.bluetooth.enable = true;
-  hardware.pulseaudio.enable = false;
+  hardware = {
+    bluetooth.enable = true;
+    pulseaudio.enable = false;
+  };
+
   security.rtkit.enable = true;
 
   users.users.matheus = {
@@ -80,13 +67,12 @@ in
     description = "matheus";
     extraGroups = [ "video" "networkmanager" "wheel" "docker" "vboxusers" ];
     shell = pkgs.zsh;
-    packages = with pkgs; [
-      #  thunderbird
-    ];
   };
 
-  programs.zsh.enable = true;
-  programs.firefox.enable = true;
+  programs = {
+    zsh.enable = true;
+    firefox.enable = true;
+  };
 
   nixpkgs.config = {
     allowUnfree = true;
@@ -108,19 +94,43 @@ in
     (nerdfonts.override { fonts = [ "FiraCode" "Iosevka" "DroidSansMono" "JetBrainsMono" ]; })
   ];
 
+  environment.shells = with pkgs; [ zsh ];
   environment.systemPackages = with pkgs; [
+    # cli
     vim
     wget
     curl
     git
-    neovim
-    unstable.discord
-    vesktop
-    unstable.ghostty
     tmux
+    fzf
+    ripgrep
+    unzip
+    postgresql
+    tldr
+    mpv
+    bat
+    wl-clipboard
+    playerctl
+    openvpn
+    btop
+    # tools
+    dbeaver-bin
+    insomnia
+    gnome.nautilus
+    gnomeExtensions.blur-my-shell
+    git-credential-manager
+    libreoffice
+    nwg-look
+    neovim
+    obs-studio
+    postman
     spotify
     spicetify-cli
-    unstable.vscode-fhs
+    stremio
+    ungoogled-chromium
+    vesktop
+    qbittorrent
+    # languages/lsp
     rustc
     cargo
     rustup
@@ -132,48 +142,22 @@ in
     llvm
     clang
     libclang
-    libreoffice
-    fzf
-    ripgrep
-    qbittorrent
     python3
     go
     nodejs_22
     jdk
-    ungoogled-chromium
     bun
     elixir_1_15
+    # unstable pkgs 
+    unstable.discord
+    unstable.ghostty
+    unstable.vscode-fhs
     unstable.zed-editor
     unstable.kitty
-    unzip
-    gnome.nautilus
-    gnomeExtensions.blur-my-shell
     unstable.brave
-    nwg-look
-    dbeaver-bin
-    mpv
-    bat
-    postman
-    insomnia
-    postgresql
-    wl-clipboard
-    playerctl
-    git-credential-manager
-    stremio
-    btop
-    obs-studio
-    tldr
-    openvpn
     unstable.proton-pass
+    unstable.slack
   ];
-
-  environment.shells = with pkgs; [ zsh ];
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   virtualisation = {
     docker.enable = true;
@@ -182,8 +166,4 @@ in
       enableExtensionPack = true;
     };
   };
-
-  swapDevices = [{ device = "/swapfile"; size = 8192; }];
-  system.stateVersion = "24.05";
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }
