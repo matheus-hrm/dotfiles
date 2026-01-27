@@ -6,7 +6,7 @@
       # ./hyperland.nix
       # ./plasma6.nix
       # ./i3wm.nix
-      # ./sway.nix
+      ./sway.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -14,7 +14,7 @@
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
   swapDevices = [{ device = "/swapfile"; size = 8192; }];
-  system.stateVersion = "24.05";
+  system.stateVersion = "25.05";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   time.timeZone = "America/Sao_Paulo";
@@ -36,8 +36,8 @@
       enable = true;
       xkb.layout = "br";
       videoDrivers = [ "amdgpu" ];
-      desktopManager.gnome.enable = true;
-      displayManager.gdm.enable = true;
+      # desktopManager.gnome.enable = true;
+      # displayManager.gdm.enable = true;
     };
     pipewire = {
       enable = true;
@@ -45,6 +45,7 @@
       alsa.support32Bit = true;
       pulse.enable = true;
     };
+    pulseaudio.enable = false;
     printing.enable = true;
     openssh.enable = true;
   };
@@ -57,7 +58,6 @@
 
   hardware = {
     bluetooth.enable = true;
-    pulseaudio.enable = false;
   };
 
   security.rtkit.enable = true;
@@ -91,7 +91,10 @@
     jetbrains-mono
     comic-mono
     iosevka-comfy.comfy
-    (nerdfonts.override { fonts = [ "FiraCode" "Iosevka" "DroidSansMono" "JetBrainsMono" ]; })
+    nerd-fonts.fira-code
+    nerd-fonts.iosevka
+    nerd-fonts.droid-sans-mono
+    nerd-fonts.jetbrains-mono
   ];
 
   environment.shells = with pkgs; [ zsh ];
@@ -116,7 +119,7 @@
     # tools
     dbeaver-bin
     insomnia
-    gnome.nautilus
+    nautilus
     gnomeExtensions.blur-my-shell
     git-credential-manager
     libreoffice
@@ -125,9 +128,7 @@
     obs-studio
     postman
     spotify
-    spicetify-cli
     stremio
-    ungoogled-chromium
     vesktop
     qbittorrent
     # languages/lsp
@@ -140,23 +141,20 @@
     glfw
     clang
     llvm
-    clang
+    clang-tools
     libclang
     python3
     go
     nodejs_22
     jdk
     bun
-    elixir_1_15
     # unstable pkgs 
-    unstable.discord
     unstable.ghostty
     unstable.vscode-fhs
     unstable.zed-editor
     unstable.kitty
     unstable.brave
     unstable.proton-pass
-    unstable.slack
   ];
 
   virtualisation = {

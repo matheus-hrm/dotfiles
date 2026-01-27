@@ -9,7 +9,7 @@
     dunst
     rofi-wayland
     gtklock
-    cinnamon.nemo-with-extensions
+    nemo-with-extensions
     wob
     i3status
     waybar
@@ -23,8 +23,16 @@
   #   extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   # };
   services.gnome.gnome-keyring.enable = true;
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
+      };
+    };
+  };
   programs.sway = {
-    enable = false;
+    enable = true;
     wrapperFeatures.gtk = true;
     extraPackages = with pkgs; [
       swaylock
