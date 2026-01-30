@@ -13,7 +13,25 @@ return {
   --   end,
   -- },
   {
+    "vyfor/cord.nvim", 
+    lazy = false,
+    opts = {
+      config = function()
+        require("cord").setup()
+        display = {
+          theme = "atom"
+        }
+        editor = {
+          tooltip = "nvim"
+        }
+      end
+    }
+  },
+  {
     "xiyaowong/transparent.nvim", lazy = false
+  },
+  {
+    "RRethy/base16-nvim", lazy = false
   },
   {
     'morhetz/gruvbox', lazy = false
@@ -81,7 +99,7 @@ return {
       require "astronvim.plugins.configs.luasnip"(plugin, opts) -- include the default astronvim config that calls the setup call
       -- add more custom luasnip configuration such as filetype extend or custom snippets
       local luasnip = require "luasnip"
-      luasnip.filetype_extend("javascript", { "javascriptreact" })
+      luasnip.filetype_extend("javascript", { "javascriptreact" }, {"typescriptreact"},"typescript")
     end,
   },
 

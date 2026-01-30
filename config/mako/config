@@ -1,14 +1,27 @@
-# Appearance {{{
-font=Fira Code Nerd Font Mono
-width=350
-padding=10
-margin=10
+# Fonte limpa e moderna
+font=JetBrainsMono Nerd Font 10
+
+# Tamanho e layout
+width=320
+height=80
+margin=20
+padding=14
 border-size=2
-border-radius=8
+border-radius=14
 
-background-color=#1d202f
-border-color=#f7768e
-text-color=#c0caf5
-# }}}
+# Cores base
+background-color=#191928
+border-color=#507079
+text-color=#e6f2ef
 
-default-timeout=2000
+# Sombra sutil (simula profundidade)
+progress-color=over #88c0d0
+
+# Tempo
+default-timeout=5000
+ignore-timeout=1
+
+# Animação (GTK-friendly)
+layer=overlay
+
+

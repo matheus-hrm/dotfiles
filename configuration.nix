@@ -148,13 +148,13 @@
     nodejs_22
     jdk
     bun
-    # unstable pkgs 
-    unstable.ghostty
-    unstable.vscode-fhs
-    unstable.zed-editor
-    unstable.kitty
-    unstable.brave
-    unstable.proton-pass
+    # unstablepkgs 
+    pkgs.unstable.ghostty
+    pkgs.unstable.vscode-fhs
+    pkgs.unstable.zed-editor
+    pkgs.unstable.kitty
+    pkgs.unstable.brave
+    pkgs.unstable.proton-pass
   ];
 
   virtualisation = {

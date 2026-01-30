@@ -6,7 +6,6 @@
     wl-clipboard
     mako
     yofi
-    dunst
     rofi-wayland
     gtklock
     nemo-with-extensions
@@ -14,25 +13,31 @@
     i3status
     waybar
     networkmanagerapplet
+    swaylock-effects
+    swayidle
+    pavucontrol
+    imv
   ];
   # services.xserver.displayManager.lightdm.enable = true;
   services.getty.autologinUser = "matheus";
+  security.polkit.enable = true;
   # xdg.portal = {
   #   enable = true;
   #   wlr.enable = true;
   #   extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   # };
   services.gnome.gnome-keyring.enable = true;
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
-      };
-    };
-  };
+  # services.greetd = {
+  #   enable = true;
+  #   settings = {
+  #     default_session = {
+  #       command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
+  #     };
+  #   };
+  # };
   programs.sway = {
     enable = true;
+    package = pkgs.swayfx;
     wrapperFeatures.gtk = true;
     extraPackages = with pkgs; [
       swaylock
@@ -43,4 +48,5 @@
     ];
   };
   programs.light.enable = true;
+  programs.regreet.enable = true;
 }

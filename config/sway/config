@@ -1,0 +1,80 @@
+# imports
+
+include /etc/sway/config-vars.d/*
+include ~/.config/sway/keybindings.conf
+
+font pango:Iosevka Nerd Font 14
+
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec kill mako &
+exec pkill dunst &
+exec pkill mako & mako --config ~/.config/mako/config 
+exec_always --no-startup-id nm-applet --indicator &
+exec_always --no-startup-id wob &
+exec_always --no-startup-id nm-online &
+
+
+xwayland enable
+
+exec swayidle -w \
+timeout 300 'swaylock -f -C' \
+timeout 600 'swaymsg "output * dpms off"' \
+resume 'swaymsg "output * dpms on"' \ 
+
+input "1:1:AT_Translated_Set_2_keyboard" {
+   xkb_layout br
+}
+
+# wallpaper
+output * bg ~/Pictures/wallpapers/wallhaven-9dlggd.jpg fill
+output * adaptive_sync on
+
+input type:touchpad {
+        tap enabled
+        natural_scroll enabled
+}
+#swayfx
+
+blur enable
+blur_xray enable
+blur_passes 2
+blur_radius 5
+shadows enable
+shadows_on_csd enable      # Sombras em janelas client-side decorated
+shadow_blur_radius 20
+shadow_color #0000007F     # Cor e opacidade da sombra
+corner_radius 25
+default_dim_inactive 0.1 
+
+layer_effects "rofi" blur enable; shadows enable
+layer_effects "mako" blur enable; shadows enable
+layer_effects "kitty" blur enable; shadows enable
+
+for_window [app_id="mako"] blur enable
+for_window [class=".*"] fade enable
+for_window [app_id="kitty"] blur enable
+
+bar {
+        swaybar_command waybar 
+}
+
+# cliente
+# classe                borda  fundo  texto    indicador filho_borda
+client.focused          #FFFFFF #222222 #ffffff #444444   #DDDDDD
+client.focused_inactive #333333 #222222 #888888 #333333   #333333
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+
+for_window [class=".*"] border pixel 3 
+for_window [app_id="spotify"] opacity 0.8
+for_window [app_id="firefox"] opacity 1.0
+for_window [app_id="kitty"] opacity 0.90
+# start kitty in floating mode on center
+for_window [app_id="kitty"] border pixel 3
+for_window [app_id="kitty"] focus
+smart_gaps on
+smart_borders on
+gaps inner 4
+include /etc/sway/config.d/*

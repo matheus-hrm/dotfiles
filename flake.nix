@@ -14,24 +14,26 @@
     let
       system = "x86_64-linux";
 
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-      unstable = import nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
+      overlays = [
+        (final: prev: {
+          unstable = import nixpkgs-unstable {
+            inherit system;
+            config.allowUnfree = true;
+          };
+        })
+      ];
     in
     {
       nixosConfigurations = {
         nixos = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = {
-            inherit pkgs unstable;
-          };
 
           modules = [
+            ({ config, pkgs, ... }: {
+              nixpkgs.config.allowUnfree = true;
+              nixpkgs.overlays = overlays;
+            })
+
             ./configuration.nix
             #./plasma6.nix
             #./hyperland.nix
@@ -51,7 +53,12 @@
       };
       homeConfigurations = {
         matheus = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
+          pkgs = import nixpkgs
+            {
+              inherit system;
+              config.allowUnfree = true;
+              overlays = overlays;
+            };
           modules = [
             ./home-manager/home.nix
             ./zsh/zsh.nix

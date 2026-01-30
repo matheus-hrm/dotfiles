@@ -1,81 +1,200 @@
 * {
-    border: none;
-    border-radius: 0;
-    font-family: "JetBrainsMono Nerd Font", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    min-height: 0;
+  border: none;
+  border-radius: 0;
+  font-family:
+    "JetBrainsMono Nerd Font", "Font Awesome 6 Free", Roboto, Helvetica, Arial,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  min-height: 0;
 }
 
 window#waybar {
-    background: #1a1a1a;
-    color: #ffffff;
+  background: transparent;
+  color: #ffffff;
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.35),
+    inset 0 0 10px rgba(255, 255, 255, 0.04);
+}
+
+tooltip {
+  background: rgba(30, 30, 30, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+tooltip label {
+  color: #ffffff;
+}
+
+/* ====================
+   WORKSPACES ISLAND
+   ==================== */
+#workspaces {
+  background: rgba(30, 30, 30, 0.6);
+  border-radius: 12px;
+  padding: 4px 8px;
+  margin: 0px 0px 0px 0px;
 }
 
 #workspaces button {
-    padding: 0 5px;
-    background: transparent;
-    color: #ffffff;
-    border: none;
+  padding: 4px 10px;
+  margin: 0px 2px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
-#workspaces button.focused {
-    background: #333333;
+#workspaces button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
 }
 
-#mode,
-#clock,
-#battery,
+#workspaces button.urgent {
+  background: rgba(255, 100, 100, 0.8);
+  color: #ffffff;
+}
+
+#workspaces button.focused,
+#workspaces button.active {
+  background: rgba(255, 255, 255, 0.9);
+  color: #000000;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* ====================
+   MPRIS (Music) ISLAND
+   ==================== */
+#mpris {
+  background: transparent;
+  border-radius: 12px;
+  padding: 4px 16px;
+  margin: 0px;
+  color: #ffffff;
+}
+
+#mpris.playing {
+  background: rgba(15, 55, 10, 0.6);
+  transition: all 0.3s ease;
+}
+
+#mpris.paused {
+  background: rgba(50, 50, 50, 0.7);
+  transition: all 0.3s ease;
+}
+
+/* ====================
+   RIGHT SIDE ISLANDS
+   ==================== */
+#pulseaudio,
+#network,
 #cpu,
 #memory,
-#network,
-#pulseaudio,
-#tray,
-#language,
-#backlight,
-#custom-yearprogress,
-#mpris {
-    padding: 0 10px;
-    margin: 0;
-    background: #333333;
-    color: #ffffff;
+#battery,
+#clock,
+#tray {
+  background: rgba(30, 30, 30, 0.6);
+  border-radius: 12px;
+  padding: 4px 12px;
+  margin: 0px 0px 0px 0px;
+  color: #ffffff;
 }
 
-/* Triangular separators */
-#custom-right-triangle {
-    padding: 0;
-    margin: 0;
+/* Hover effects */
+#pulseaudio:hover,
+#network:hover,
+#cpu:hover,
+#memory:hover,
+#battery:hover,
+#clock:hover {
+  background: rgba(40, 40, 40, 0.7);
+  transition: all 0.3s ease;
 }
 
-#custom-left-triangle {
-    padding: 0;
-    margin: 0;
-}
-
-#battery.charging {
-    background-color: #4d4d4d;
-}
-
-@keyframes blink {
-    to {
-        background-color: #ffffff;
-        color: #1a1a1a;
-    }
-}
-
-#battery.warning:not(.charging) {
-    background: #666666;
-    color: #ffffff;
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-}
-
-#network.disconnected {
-    background: #4d4d4d;
+/* ====================
+   PULSEAUDIO
+   ==================== */
+#pulseaudio {
+  color: #87ceeb;
 }
 
 #pulseaudio.muted {
-    background: #4d4d4d;
+  background: rgba(100, 50, 50, 0.6);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ====================
+   NETWORK
+   ==================== */
+#network {
+  color: #98fb98;
+}
+
+#network.disconnected {
+  background: rgba(100, 50, 50, 0.6);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ====================
+   CPU
+   ==================== */
+#cpu {
+  color: #ffa07a;
+}
+
+/* ====================
+   MEMORY
+   ==================== */
+#memory {
+  color: #dda0dd;
+}
+
+/* ====================
+   BATTERY
+   ==================== */
+#battery {
+  color: #90ee90;
+}
+
+#battery.charging {
+  color: #87ceeb;
+  background: rgba(50, 100, 150, 0.6);
+}
+
+#battery.warning:not(.charging) {
+  background: rgba(200, 150, 50, 0.6);
+  color: #ffffff;
+  animation: blink-warning 2s ease-in-out infinite;
+}
+
+#battery.critical:not(.charging) {
+  background: rgba(200, 50, 50, 0.7);
+  color: #ffffff;
+  animation: blink-critical 1s ease-in-out infinite;
+}
+
+/* ====================
+   CLOCK
+   ==================== */
+#clock {
+  color: #ffd700;
+  font-weight: bold;
+}
+
+/* ====================
+   TRAY
+   ==================== */
+#tray {
+  padding: 4px 8px;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: rgba(255, 100, 100, 0.5);
 }
