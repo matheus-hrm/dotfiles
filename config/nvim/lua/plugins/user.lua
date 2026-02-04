@@ -1,34 +1,85 @@
 ---@type LazySpec
 return {
-  -- {
-  --   "andweeb/presence.nvim",
-  --   config = function()
-  --     require("presence"):setup({
-  --       auto_update = true, -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
-  --       neovim_image_text = "Neovim text editor",
-  --       main_image = "file",
-  --       log_level = nil,
-  --       debounce_timeout = 10,
-  --     })
-  --   end,
-  -- },
   {
-    "vyfor/cord.nvim", 
-    lazy = false,
-    opts = {
-      config = function()
-        require("cord").setup()
-        display = {
-          theme = "atom"
-        }
-        editor = {
-          tooltip = "nvim"
-        }
-      end
-    }
+  "rebelot/heirline.nvim",
+    opts = function(_, opts)
+      opts.tabline = nil -- desabilita a tabline do heirline
+      return opts
+    end,
+  },
+  { 
+    "neanias/everforest-nvim"
   },
   {
-    "xiyaowong/transparent.nvim", lazy = false
+    "akinsho/bufferline.nvim",
+    event = "VeryLazy",
+    dependencies = "nvim-tree/nvim-web-devicons",
+    opts = {
+      options = {
+        mode = "buffers",
+        separator_style = "thin", -- "slant" | "thick" | "thin" | "slope" | "padded_slant"
+        color_icons = true,
+        diagnostics = "nvim_lsp",
+        offsets = {
+          {
+            filetype = "neo-tree",
+            text = "File Explorer",
+            text_align = "center",
+            separator = true,
+          },
+        },
+      },
+      highlights = {
+        buffer_selected = {
+          bold = true,
+          italic = false,
+        },
+      },
+    },
+  },
+  {
+    "rcarriga/nvim-notify",
+    opts = function(_, opts)
+      opts.background_colour = "#000000"
+      return opts
+    end,
+  },
+  {
+    "vyfor/cord.nvim", 
+  },
+  {
+    "xiyaowong/transparent.nvim", 
+    lazy = false,
+    opts = {
+      enable = true,
+      extra_groups = {
+        "BufferLineTabClose",
+        "BufferLineBufferSelected",
+        "BufferLineFill",
+        "BufferLineBackground",
+        -- "BufferLineSeparator",
+        "BufferLineSeparatorInactive",
+        "BufferLineIndicatorSelected",
+        "NvimTreeNormal",
+        "NvimTreeNormalNC",
+        "NvimTreeEndOfBuffer",
+        "NvimTreeVertSplit",
+        "NeoTreeNormal",
+        "NeoTreeNormalNC",
+        "NeoTreeEndOfBuffer",
+        "NeoTreeVertSplit",
+        "NeoTreeWinSeparator",
+        "StatusLine",
+        "StatusLineNC",
+        "WinSeparator",
+        "TabLine",
+        "TabLineFill",
+        "TabLineSel",
+        "NormalFloat",
+        "FloatBorder",
+      },
+      exclude = {},
+    },
   },
   {
     "RRethy/base16-nvim", lazy = false
@@ -74,12 +125,6 @@ return {
     end,
   },
   {
-    "mfussenegger/nvim-jdtls",
-  },
-  -- == Examples of Overriding Plugins ==
-
-  -- customize alpha options
-  {
     "goolord/alpha-nvim",
     opts = function(_, opts)
       -- customize the dashboard header
@@ -88,11 +133,7 @@ return {
       return opts
     end,
   },
-
-  -- You can disable default plugins as follows:
   { "max397574/better-escape.nvim", enabled = false },
-
-  -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
   {
     "L3MON4D3/LuaSnip",
     config = function(plugin, opts)
@@ -101,6 +142,9 @@ return {
       local luasnip = require "luasnip"
       luasnip.filetype_extend("javascript", { "javascriptreact" }, {"typescriptreact"},"typescript")
     end,
+  },
+  {
+    "kdheepak/monochrome.nvim", lazy = false
   },
 
   {

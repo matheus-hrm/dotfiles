@@ -1,21 +1,18 @@
-{ config, pkgs, unstable, ... }:
+{ pkgs, ... }:
 {
   imports =
     [
       ./hardware-configuration.nix
-      # ./hyperland.nix
-      # ./plasma6.nix
-      # ./i3wm.nix
       ./sway.nix
     ];
 
+  system.stateVersion = "25.05";
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
-  swapDevices = [{ device = "/swapfile"; size = 8192; }];
-  system.stateVersion = "25.05";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  swapDevices = [{ device = "/swapfile"; size = 8192; }];
 
   time.timeZone = "America/Sao_Paulo";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -36,14 +33,13 @@
       enable = true;
       xkb.layout = "br";
       videoDrivers = [ "amdgpu" ];
-      # desktopManager.gnome.enable = true;
-      # displayManager.gdm.enable = true;
     };
     pipewire = {
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
+      wireplumber.enable = true;
     };
     pulseaudio.enable = false;
     printing.enable = true;
@@ -53,7 +49,11 @@
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
+    extraPortals = [ 
+      pkgs.xdg-desktop-portal-gnome
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-wlr
+    ];
   };
 
   hardware = {
@@ -69,94 +69,6 @@
     shell = pkgs.zsh;
   };
 
-  programs = {
-    zsh.enable = true;
-    firefox.enable = true;
-  };
-
-  nixpkgs.config = {
-    allowUnfree = true;
-    brave.commandLineArgs = [
-      "--enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland"
-    ];
-  };
-
-  fonts.packages = with pkgs; [
-    fira-code
-    iosevka
-    monocraft
-    mononoki
-    roboto-mono
-    hermit
-    jetbrains-mono
-    comic-mono
-    iosevka-comfy.comfy
-    nerd-fonts.fira-code
-    nerd-fonts.iosevka
-    nerd-fonts.droid-sans-mono
-    nerd-fonts.jetbrains-mono
-  ];
-
-  environment.shells = with pkgs; [ zsh ];
-  environment.systemPackages = with pkgs; [
-    # cli
-    vim
-    wget
-    curl
-    git
-    tmux
-    fzf
-    ripgrep
-    unzip
-    postgresql
-    tldr
-    mpv
-    bat
-    wl-clipboard
-    playerctl
-    openvpn
-    btop
-    # tools
-    dbeaver-bin
-    insomnia
-    nautilus
-    gnomeExtensions.blur-my-shell
-    git-credential-manager
-    libreoffice
-    nwg-look
-    neovim
-    obs-studio
-    postman
-    spotify
-    stremio
-    vesktop
-    qbittorrent
-    # languages/lsp
-    rustc
-    cargo
-    rustup
-    gcc
-    cmake
-    raylib
-    glfw
-    clang
-    llvm
-    clang-tools
-    libclang
-    python3
-    go
-    nodejs_22
-    jdk
-    bun
-    # unstablepkgs 
-    pkgs.unstable.ghostty
-    pkgs.unstable.vscode-fhs
-    pkgs.unstable.zed-editor
-    pkgs.unstable.kitty
-    pkgs.unstable.brave
-    pkgs.unstable.proton-pass
-  ];
-
   virtualisation = {
     docker.enable = true;
     virtualbox.host = {
@@ -164,4 +76,107 @@
       enableExtensionPack = true;
     };
   };
+
+  programs = {
+    zsh.enable = true;
+    firefox.enable = true;
+    chromium = {
+      extraOpts = ''
+        --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland
+      '';
+    };
+  };
+
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
+
+  fonts.packages = with pkgs; [
+    comic-mono
+    fira-code
+    hermit
+    iosevka
+    iosevka-comfy.comfy
+    jetbrains-mono
+    monocraft
+    mononoki
+    nerd-fonts.droid-sans-mono
+    nerd-fonts.fira-code
+    nerd-fonts.iosevka
+    nerd-fonts.jetbrains-mono
+    roboto-mono
+  ];
+
+  environment.shells = with pkgs; [ zsh ];
+  environment.systemPackages = with pkgs; [
+    # cli
+    bat
+    btop
+    curl
+    fzf
+    git
+    mpv
+    openvpn
+    playerctl
+    postgresql
+    ripgrep
+    tldr
+    tmux
+    unzip
+    vim
+    wget
+    wl-clipboard
+    # tools
+    anki
+    dbeaver-bin
+    discord
+    git-credential-manager
+    gnome-calculator
+    gnomeExtensions.blur-my-shell
+    imv
+    insomnia
+    libreoffice
+    nautilus
+    neovim
+    nwg-look
+    obs-studio
+    postman
+    qbittorrent
+    spotify
+    stremio
+    vesktop
+    zathura
+    # languages/lsp
+    bun
+    cargo
+    clang
+    clang-tools
+    cmake
+    gcc
+    glfw
+    go
+    jdk
+    kubectl
+    kubernetes-helm
+    libclang
+    llvm
+    minikube
+    nil
+    nodejs_22
+    python3
+    raylib
+    rust-analyzer
+    rustc
+    rustup
+    # unstablepkgs 
+    pkgs.unstable.ghostty
+    pkgs.unstable.vscode-fhs
+    pkgs.unstable.zed-editor
+    pkgs.unstable.kitty
+    pkgs.unstable.brave
+    pkgs.unstable.proton-pass
+    (pkgs.unstable.google-chrome.override {
+      commandLineArgs = [ "--enable-features=TouchpadOverscrollHistoryNavigation" ];
+    })
+  ];
 }
