@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 with lib;
 with pkgs;
 {
@@ -11,9 +16,9 @@ with pkgs;
     grim
     slurp
   ];
- 
+
   home.stateVersion = "22.11";
- 
+
   imports = [
     ../zsh/zsh.nix
     # ./waybar/default.nix
@@ -21,8 +26,10 @@ with pkgs;
 
   programs.git = {
     enable = true;
-    userName = "matheus-hrm";
-    userEmail = "rodriguesm673@gmail.com";
+    settings.user = {
+      name = "matheus-hrm";
+      email = "rodriguesm673@gmail.com";
+    };
   };
   programs.home-manager.enable = true;
 }

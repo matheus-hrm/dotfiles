@@ -1,52 +1,63 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
     grim
-    slurp
-    wl-clipboard
-    mako
-    yofi
-    rofi-wayland
     gtklock
-    nemo-with-extensions
-    wob
     i3status
-    waybar
-    networkmanagerapplet
-    swaylock-effects
-    swayidle
-    pavucontrol
     imv
+    mako
+    nemo-with-extensions
+    networkmanagerapplet
+    pavucontrol
+    rofi
+    slurp
+    swayidle
+    swaylock-effects
+    tuigreet
+    waybar
+    wl-clipboard
+    wob
+    yofi
   ];
-  # services.xserver.displayManager.lightdm.enable = true;
-  services.getty.autologinUser = "matheus";
   security.polkit.enable = true;
-  # xdg.portal = {
-  #   enable = true;
-  #   wlr.enable = true;
-  #   extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  # };
-  services.gnome.gnome-keyring.enable = true;
-  # services.greetd = {
-  #   enable = true;
-  #   settings = {
-  #     default_session = {
-  #       command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
-  #     };
-  #   };
-  # };
-  programs.sway = {
+  xdg.portal = {
     enable = true;
-    package = pkgs.swayfx;
-    wrapperFeatures.gtk = true;
-    extraPackages = with pkgs; [
-      swaylock
-      swayidle
-      swaybg
-      swayfx
-      swayimg
-    ];
+    wlr.enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
-  programs.light.enable = true;
-  programs.regreet.enable = true;
+  services = {
+    getty.autologinUser = "matheus";
+    gnome.gnome-keyring.enable = true;
+    greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          command = ''
+            ${pkgs.greetd.tuigreet}/bin/tuigreet \
+            --time \
+            --cmd sway \
+            --theme 'container=black;text=cyan;time=green;border=green;prompt=cyan;input=cyan;action=cyan;button=green' \
+            --user-menu \
+            --asterisks \
+          '';
+          user = "matheus";
+        };
+      };
+    };
+  };
+  programs = {
+    light.enable = true;
+    sway = {
+      enable = true;
+      package = pkgs.swayfx;
+      wrapperFeatures.gtk = true;
+      extraPackages = with pkgs; [
+        swaylock
+        swayidle
+        swaybg
+        swayfx
+        swayimg
+      ];
+    };
+  };
 }

@@ -1,18 +1,25 @@
 { pkgs, ... }:
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./sway.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ./sway.nix
+  ];
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  swapDevices = [{ device = "/swapfile"; size = 8192; }];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 8192;
+    }
+  ];
 
   time.timeZone = "America/Sao_Paulo";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -49,7 +56,7 @@
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    extraPortals = [ 
+    extraPortals = [
       pkgs.xdg-desktop-portal-gnome
       pkgs.xdg-desktop-portal-gtk
       pkgs.xdg-desktop-portal-wlr
@@ -62,29 +69,35 @@
 
   security.rtkit.enable = true;
 
+  users.defaultUserShell = pkgs.zsh;
   users.users.matheus = {
     isNormalUser = true;
     description = "matheus";
-    extraGroups = [ "video" "networkmanager" "wheel" "docker" "vboxusers" ];
+    extraGroups = [
+      "video"
+      "networkmanager"
+      "wheel"
+      "docker"
+      "libvirtd"
+    ];
     shell = pkgs.zsh;
   };
 
   virtualisation = {
     docker.enable = true;
-    virtualbox.host = {
+    libvirtd = {
       enable = true;
-      enableExtensionPack = true;
+      qemu = {
+        package = pkgs.qemu_kvm;
+        runAsRoot = false;
+      };
     };
   };
 
   programs = {
     zsh.enable = true;
     firefox.enable = true;
-    chromium = {
-      extraOpts = ''
-        --enable-features=TouchpadOverscrollHistoryNavigation,UseOzonePlatform --ozone-platform=wayland
-      '';
-    };
+    virt-manager.enable = true;
   };
 
   nixpkgs.config = {
@@ -143,7 +156,6 @@
     postman
     qbittorrent
     spotify
-    stremio
     vesktop
     zathura
     # languages/lsp
@@ -156,6 +168,7 @@
     glfw
     go
     jdk
+    jdt-language-server
     kubectl
     kubernetes-helm
     libclang
@@ -168,15 +181,15 @@
     rust-analyzer
     rustc
     rustup
-    # unstablepkgs 
+    # virtualisation
+    virt-viewer
+    spice-gtk
+    # unstablepkgs
     pkgs.unstable.ghostty
     pkgs.unstable.vscode-fhs
     pkgs.unstable.zed-editor
     pkgs.unstable.kitty
     pkgs.unstable.brave
     pkgs.unstable.proton-pass
-    (pkgs.unstable.google-chrome.override {
-      commandLineArgs = [ "--enable-features=TouchpadOverscrollHistoryNavigation" ];
-    })
   ];
 }
