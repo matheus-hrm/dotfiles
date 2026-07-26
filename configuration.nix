@@ -2,12 +2,16 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./sway.nix
   ];
 
   system.stateVersion = "25.11";
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelModules = [
+    "vboxdrv"
+    "vboxnetadp"
+    "vboxnetflt"
+  ];
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
   nix.settings.experimental-features = [
@@ -55,11 +59,8 @@
 
   xdg.portal = {
     enable = true;
-    wlr.enable = true;
     extraPortals = [
-      pkgs.xdg-desktop-portal-gnome
       pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-wlr
     ];
   };
 
@@ -69,56 +70,61 @@
 
   security.rtkit.enable = true;
 
-  users.defaultUserShell = pkgs.zsh;
-  users.users.matheus = {
-    isNormalUser = true;
-    description = "matheus";
-    extraGroups = [
-      "video"
-      "networkmanager"
-      "wheel"
-      "docker"
-      "libvirtd"
-    ];
-    shell = pkgs.zsh;
+  users = {
+    users.matheus = {
+      isNormalUser = true;
+      description = "matheus";
+      extraGroups = [
+        "video"
+        "networkmanager"
+        "wheel"
+        "docker"
+      ];
+      shell = pkgs.zsh;
+    };
+    extraGroups = {
+      vboxusers.members = [ "matheus" ];
+    };
+    defaultUserShell = pkgs.zsh;
   };
 
   virtualisation = {
     docker.enable = true;
-    libvirtd = {
-      enable = true;
-      qemu = {
-        package = pkgs.qemu_kvm;
-        runAsRoot = false;
-      };
-    };
+    virtualbox.host.enable = true;
   };
 
   programs = {
     zsh.enable = true;
     firefox.enable = true;
-    virt-manager.enable = true;
   };
 
   nixpkgs.config = {
     allowUnfree = true;
   };
-
-  fonts.packages = with pkgs; [
-    comic-mono
-    fira-code
-    hermit
-    iosevka
-    iosevka-comfy.comfy
-    jetbrains-mono
-    monocraft
-    mononoki
-    nerd-fonts.droid-sans-mono
-    nerd-fonts.fira-code
-    nerd-fonts.iosevka
-    nerd-fonts.jetbrains-mono
-    roboto-mono
-  ];
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      comic-mono
+      fira-code
+      hermit
+      iosevka
+      iosevka-comfy.comfy
+      ipaexfont
+      jetbrains-mono
+      monocraft
+      mononoki
+      nerd-fonts.droid-sans-mono
+      nerd-fonts.fira-code
+      nerd-fonts.hack
+      nerd-fonts.iosevka
+      nerd-fonts.jetbrains-mono
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      noto-fonts-color-emoji
+      roboto-mono
+    ];
+  };
 
   environment.shells = with pkgs; [ zsh ];
   environment.systemPackages = with pkgs; [
@@ -138,7 +144,6 @@
     unzip
     vim
     wget
-    wl-clipboard
     # tools
     anki
     dbeaver-bin
@@ -153,9 +158,11 @@
     neovim
     nwg-look
     obs-studio
+    obsidian
     postman
     qbittorrent
     spotify
+    stremio-linux-shell
     vesktop
     zathura
     # languages/lsp
@@ -181,9 +188,6 @@
     rust-analyzer
     rustc
     rustup
-    # virtualisation
-    virt-viewer
-    spice-gtk
     # unstablepkgs
     pkgs.unstable.ghostty
     pkgs.unstable.vscode-fhs

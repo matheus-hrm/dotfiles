@@ -12,15 +12,24 @@ with pkgs;
 
   home.packages = with pkgs; [
     htop
-    neofetch
-    grim
-    slurp
+    fastfetch
+
+    # GTK/xfwm4 themes
+    arc-theme
+    orchis-theme
+    colloid-gtk-theme
+
+    # icon themes
+    papirus-icon-theme
+    tela-icon-theme
+    colloid-icon-theme
   ];
 
   home.stateVersion = "22.11";
 
   imports = [
     ../zsh/zsh.nix
+    ./xfce-keybindings.nix
     # ./waybar/default.nix
   ];
 
